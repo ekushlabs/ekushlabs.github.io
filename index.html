@@ -3,706 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ─── SEO ─────────────────────────────────────────────────── -->
   <title>EkushLabs — Simple apps, meaningful experiences</title>
   <meta name="description" content="EkushLabs is a studio building everyday utility apps. Simple apps, meaningful experiences." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="EkushLabs" />
+
+  <!-- ─── THEME COLOR (mobile browser tab) ────────────────────── -->
+  <meta name="theme-color" content="#080D1A" />
+
+  <!-- ─── OPEN GRAPH (social sharing preview) ─────────────────── -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://ekushlabs.com/" />
+  <meta property="og:title"       content="EkushLabs — Simple apps, meaningful experiences" />
+  <meta property="og:description" content="A studio building everyday utility apps." />
+  <!-- TODO: Create a 1200x630px branded image and place it at assets/og-image.png -->
+  <meta property="og:image"       content="https://ekushlabs.com/assets/og-image.png" />
+
+  <!-- ─── TWITTER CARD ─────────────────────────────────────────── -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="EkushLabs — Simple apps, meaningful experiences" />
+  <meta name="twitter:description" content="A studio building everyday utility apps." />
+  <meta name="twitter:image"       content="https://ekushlabs.com/assets/og-image.png" />
+
+  <!-- ─── FAVICON ──────────────────────────────────────────────── -->
   <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="apple-touch-icon"      href="assets/logo.png" />
+
+  <!-- ─── FONTS ────────────────────────────────────────────────── -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
-
-  <style>
-    /* ─── RESET & VARIABLES ─────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --navy:       #080D1A;
-      --navy-mid:   #0E1628;
-      --navy-light: #162035;
-      --steel:      #2A3A5C;
-      --silver:     #8A9BB8;
-      --silver-lt:  #C4CFDF;
-      --cyan:       #00D4FF;
-      --cyan-dim:   rgba(0, 212, 255, 0.15);
-      --cyan-glow:  rgba(0, 212, 255, 0.4);
-      --white:      #F0F4FF;
-      --text-muted: #6A7A96;
-
-      --font-display: 'Bebas Neue', sans-serif;
-      --font-cond:    'Barlow Condensed', sans-serif;
-      --font-body:    'Barlow', sans-serif;
-
-      --radius: 4px;
-      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--navy);
-      color: var(--white);
-      font-family: var(--font-body);
-      font-weight: 300;
-      line-height: 1.6;
-      overflow-x: hidden;
-      cursor: default;
-    }
-
-    /* ─── NOISE OVERLAY ─────────────────────────────────────── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
-    }
-
-    /* ─── GRID BACKGROUND ───────────────────────────────────── */
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ─── NAVBAR ────────────────────────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 5vw;
-      height: 70px;
-      background: rgba(8, 13, 26, 0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(0, 212, 255, 0.08);
-      transition: border-color var(--transition);
-    }
-
-    nav:hover { border-bottom-color: rgba(0, 212, 255, 0.18); }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-
-    .nav-logo {
-      width: 36px;
-      height: 36px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 8px var(--cyan-glow));
-      transition: filter var(--transition);
-    }
-
-    .nav-brand:hover .nav-logo {
-      filter: drop-shadow(0 0 14px var(--cyan));
-    }
-
-    .nav-name {
-      font-family: var(--font-cond);
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--white);
-    }
-
-    .nav-name span { color: var(--cyan); }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--font-cond);
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--silver);
-      text-decoration: none;
-      transition: color var(--transition);
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 0;
-      width: 0; height: 1px;
-      background: var(--cyan);
-      transition: width var(--transition);
-    }
-
-    .nav-links a:hover { color: var(--cyan); }
-    .nav-links a:hover::after { width: 100%; }
-
-    /* ─── HERO ──────────────────────────────────────────────── */
-    #hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 5vw 80px;
-      overflow: hidden;
-    }
-
-    .hero-glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -60%);
-      width: 700px;
-      height: 700px;
-      background: radial-gradient(ellipse, rgba(0,212,255,0.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-glow-2 {
-      position: absolute;
-      top: 30%;
-      left: 20%;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(ellipse, rgba(74,111,165,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-logo {
-      width: 110px;
-      height: 110px;
-      object-fit: contain;
-      margin-bottom: 2rem;
-      filter: drop-shadow(0 0 24px var(--cyan-glow));
-      animation: float 4s ease-in-out infinite, fadeUp 0.8s ease both;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-10px); }
-    }
-
-    .hero-eyebrow {
-      font-family: var(--font-cond);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 1rem;
-      animation: fadeUp 0.8s 0.1s ease both;
-    }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(4rem, 12vw, 10rem);
-      line-height: 0.92;
-      letter-spacing: 0.04em;
-      color: var(--white);
-      margin-bottom: 1.5rem;
-      animation: fadeUp 0.8s 0.2s ease both;
-    }
-
-    .hero-title .accent { color: var(--cyan); }
-
-    .hero-tagline {
-      font-family: var(--font-body);
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      font-weight: 300;
-      color: var(--silver);
-      letter-spacing: 0.05em;
-      margin-bottom: 3rem;
-      animation: fadeUp 0.8s 0.3s ease both;
-    }
-
-    .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--font-cond);
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--navy);
-      background: var(--cyan);
-      padding: 14px 36px;
-      text-decoration: none;
-      border-radius: var(--radius);
-      transition: all var(--transition);
-      animation: fadeUp 0.8s 0.4s ease both;
-      box-shadow: 0 0 30px var(--cyan-glow);
-    }
-
-    .hero-cta:hover {
-      background: #fff;
-      box-shadow: 0 0 50px var(--cyan);
-      transform: translateY(-2px);
-    }
-
-    .hero-cta svg { width: 16px; height: 16px; }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      animation: fadeUp 1s 0.8s ease both;
-    }
-
-    .hero-scroll span {
-      font-family: var(--font-cond);
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--cyan), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; transform: scaleY(1); }
-      50%       { opacity: 1; transform: scaleY(1.2); }
-    }
-
-    /* ─── SECTIONS COMMON ───────────────────────────────────── */
-    section {
-      position: relative;
-      z-index: 1;
-      padding: 100px 5vw;
-    }
-
-    .section-label {
-      font-family: var(--font-cond);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-label::before {
-      content: '';
-      display: inline-block;
-      width: 30px;
-      height: 1px;
-      background: var(--cyan);
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      line-height: 1;
-      letter-spacing: 0.04em;
-      color: var(--white);
-      margin-bottom: 1.5rem;
-    }
-
-    .section-subtitle {
-      font-size: 1rem;
-      color: var(--silver);
-      max-width: 520px;
-      line-height: 1.7;
-    }
-
-    /* ─── APPS SECTION ──────────────────────────────────────── */
-    #apps { background: var(--navy-mid); }
-
-    .apps-header {
-      margin-bottom: 4rem;
-    }
-
-    .apps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5px;
-      background: rgba(0,212,255,0.06);
-      border: 1px solid rgba(0,212,255,0.08);
-    }
-
-    .app-card {
-      background: var(--navy-mid);
-      padding: 3rem 2.5rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      transition: background var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .app-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 0;
-      background: var(--cyan);
-      transition: height 0.4s ease;
-    }
-
-    .app-card:hover { background: var(--navy-light); }
-    .app-card:hover::before { height: 100%; }
-
-    .app-card-tag {
-      font-family: var(--font-cond);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      background: var(--cyan-dim);
-      padding: 4px 10px;
-      border-radius: 2px;
-      display: inline-block;
-      width: fit-content;
-    }
-
-    .app-card-name {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      letter-spacing: 0.06em;
-      color: var(--white);
-      line-height: 1;
-    }
-
-    .app-card-desc {
-      font-size: 0.9rem;
-      color: var(--silver);
-      line-height: 1.7;
-    }
-
-    .app-card-footer {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: auto;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .app-card-status {
-      font-family: var(--font-cond);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .status-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--cyan);
-      animation: pulse 2s infinite;
-    }
-
-    .status-dot.soon { background: var(--silver); animation: none; }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.5; transform: scale(1.3); }
-    }
-
-    /* Coming soon card */
-    .app-card.coming-soon {
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    /* ─── ABOUT SECTION ─────────────────────────────────────── */
-    #about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
-    }
-
-    .about-left {}
-
-    .about-right {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .about-stat {
-      padding: 2rem;
-      border: 1px solid rgba(0,212,255,0.1);
-      position: relative;
-      transition: border-color var(--transition);
-    }
-
-    .about-stat:hover { border-color: rgba(0,212,255,0.3); }
-
-    .about-stat-num {
-      font-family: var(--font-display);
-      font-size: 3.5rem;
-      color: var(--cyan);
-      line-height: 1;
-      letter-spacing: 0.04em;
-    }
-
-    .about-stat-label {
-      font-family: var(--font-cond);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--silver);
-      margin-top: 0.5rem;
-    }
-
-    .about-text {
-      font-size: 1rem;
-      color: var(--silver);
-      line-height: 1.8;
-      margin-top: 1.5rem;
-    }
-
-    .about-values {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .about-value {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-
-    .value-icon {
-      width: 32px;
-      height: 32px;
-      min-width: 32px;
-      background: var(--cyan-dim);
-      border: 1px solid rgba(0,212,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 2px;
-    }
-
-    .value-icon svg {
-      width: 14px; height: 14px;
-      stroke: var(--cyan);
-      fill: none;
-      stroke-width: 2;
-    }
-
-    .value-text h4 {
-      font-family: var(--font-cond);
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 0.2rem;
-    }
-
-    .value-text p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    /* ─── CONTACT SECTION ───────────────────────────────────── */
-    #contact {
-      background: var(--navy-mid);
-      text-align: center;
-    }
-
-    .contact-inner {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .contact-email {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-family: var(--font-cond);
-      font-size: 1.1rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      color: var(--white);
-      text-decoration: none;
-      padding: 18px 40px;
-      border: 1px solid rgba(0,212,255,0.3);
-      margin-top: 2.5rem;
-      transition: all var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .contact-email::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--cyan-dim);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform var(--transition);
-    }
-
-    .contact-email:hover {
-      border-color: var(--cyan);
-      color: var(--cyan);
-    }
-
-    .contact-email:hover::before { transform: scaleX(1); }
-
-    .contact-email span { position: relative; z-index: 1; }
-
-    .contact-email svg {
-      width: 16px; height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ─── FOOTER ────────────────────────────────────────────── */
-    footer {
-      position: relative;
-      z-index: 1;
-      padding: 2.5rem 5vw;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .footer-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-
-    .footer-logo {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
-      opacity: 0.7;
-      transition: opacity var(--transition);
-    }
-
-    .footer-brand:hover .footer-logo { opacity: 1; }
-
-    .footer-name {
-      font-family: var(--font-cond);
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      transition: color var(--transition);
-    }
-
-    .footer-brand:hover .footer-name { color: var(--silver); }
-
-    .footer-copy {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
-    }
-
-    .footer-tagline {
-      font-family: var(--font-cond);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    /* ─── DIVIDER LINE ──────────────────────────────────────── */
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(0,212,255,0.2), transparent);
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ─── ANIMATIONS ────────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ─── RESPONSIVE ────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      #about {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-
-      .nav-links { display: none; }
-
-      .hero-logo { width: 80px; height: 80px; }
-
-      .about-right {
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-
-      .about-stat { flex: 1; min-width: 140px; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- ─── STYLES ───────────────────────────────────────────────── -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- ─── GOOGLE ANALYTICS ─────────────────────────────────────── -->
+  <!-- TODO: Replace G-XXXXXXXXXX with your actual Measurement ID  -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  -->
 </head>
 <body>
 
-  <div class="grid-bg"></div>
+  <!-- ─── BACKGROUND GRID ──────────────────────────────────────── -->
+  <div class="grid-bg" aria-hidden="true"></div>
 
-  <!-- ─── NAVBAR ─────────────────────────────────────────────── -->
-  <nav>
+  <!-- ─── NAVBAR ───────────────────────────────────────────────── -->
+  <nav id="navbar">
     <a href="#hero" class="nav-brand">
-      <img src="assets/logo.png" alt="EkushLabs" class="nav-logo" />
-      <span class="nav-name">Ekush<span>Labs</span></span>
+      <img src="assets/logo.png" alt="EkushLabs Logo" class="nav-logo" />
+      <span class="nav-name">Ekush<span class="accent">Labs</span></span>
     </a>
     <ul class="nav-links">
       <li><a href="#apps">Apps</a></li>
@@ -711,35 +69,33 @@
     </ul>
   </nav>
 
-  <!-- ─── HERO ───────────────────────────────────────────────── -->
+  <!-- ─── HERO ─────────────────────────────────────────────────── -->
   <section id="hero">
-    <div class="hero-glow"></div>
-    <div class="hero-glow-2"></div>
+    <div class="hero-glow"   aria-hidden="true"></div>
+    <div class="hero-glow-2" aria-hidden="true"></div>
 
-    <img src="assets/logo.png" alt="EkushLabs Logo" class="hero-logo" />
-
+    <img src="assets/logo.png" alt="EkushLabs" class="hero-logo" />
     <p class="hero-eyebrow">Welcome to</p>
-
-    <h1 class="hero-title">
-      Ekush<span class="accent">Labs</span>
-    </h1>
-
+    <h1 class="hero-title">Ekush<span class="accent">Labs</span></h1>
     <p class="hero-tagline">Simple apps, meaningful experiences.</p>
 
     <a href="#apps" class="hero-cta">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <rect x="5" y="2" width="14" height="20" rx="2"/>
+        <circle cx="12" cy="17" r="1" fill="currentColor"/>
+      </svg>
       <span>View Our Apps</span>
     </a>
 
-    <div class="hero-scroll">
+    <div class="hero-scroll" aria-hidden="true">
       <div class="scroll-line"></div>
       <span>Scroll</span>
     </div>
   </section>
 
-  <div class="divider"></div>
+  <div class="divider" aria-hidden="true"></div>
 
-  <!-- ─── APPS ───────────────────────────────────────────────── -->
+  <!-- ─── APPS ──────────────────────────────────────────────────── -->
   <section id="apps">
     <div class="apps-header reveal">
       <p class="section-label">What we build</p>
@@ -750,6 +106,7 @@
     <div class="apps-grid">
 
       <!-- Ekush Ponji -->
+      <!-- TODO: Update href to Play Store link when live -->
       <a href="https://ekushponji.ekushlabs.com" class="app-card reveal">
         <span class="app-card-tag">Calendar</span>
         <h3 class="app-card-name">Ekush Ponji</h3>
@@ -760,7 +117,7 @@
         </div>
       </a>
 
-      <!-- Placeholder for next app -->
+      <!-- TODO: Replace with Baby Tracker details when ready -->
       <div class="app-card coming-soon reveal">
         <span class="app-card-tag">Coming Soon</span>
         <h3 class="app-card-name">Next App</h3>
@@ -774,10 +131,11 @@
     </div>
   </section>
 
-  <div class="divider"></div>
+  <div class="divider" aria-hidden="true"></div>
 
-  <!-- ─── ABOUT ──────────────────────────────────────────────── -->
+  <!-- ─── ABOUT ─────────────────────────────────────────────────── -->
   <section id="about">
+
     <div class="about-left reveal">
       <p class="section-label">Who we are</p>
       <h2 class="section-title">A studio building everyday utility apps</h2>
@@ -786,37 +144,49 @@
       </p>
 
       <div class="about-values">
+
         <div class="about-value">
-          <div class="value-icon">
-            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <div class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
           </div>
           <div class="value-text">
             <h4>Simplicity first</h4>
             <p>Every feature earns its place. No bloat, no noise.</p>
           </div>
         </div>
+
         <div class="about-value">
-          <div class="value-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          <div class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 8v4l3 3"/>
+            </svg>
           </div>
           <div class="value-text">
             <h4>Built for daily use</h4>
             <p>Apps that fit naturally into your routine.</p>
           </div>
         </div>
+
         <div class="about-value">
-          <div class="value-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
           </div>
           <div class="value-text">
             <h4>Privacy respecting</h4>
             <p>Your data stays yours. Always.</p>
           </div>
         </div>
+
       </div>
     </div>
 
     <div class="about-right reveal">
+      <!-- TODO: Update stat numbers as more apps launch -->
       <div class="about-stat">
         <div class="about-stat-num">01</div>
         <div class="about-stat-label">App Live</div>
@@ -830,54 +200,39 @@
         <div class="about-stat-label">Apps in the Pipeline</div>
       </div>
     </div>
+
   </section>
 
-  <div class="divider"></div>
+  <div class="divider" aria-hidden="true"></div>
 
-  <!-- ─── CONTACT ────────────────────────────────────────────── -->
+  <!-- ─── CONTACT ───────────────────────────────────────────────── -->
   <section id="contact">
     <div class="contact-inner reveal">
-      <p class="section-label" style="justify-content: center;">Get in touch</p>
+      <p class="section-label center">Get in touch</p>
       <h2 class="section-title">Contact</h2>
-      <p class="section-subtitle" style="margin: 0 auto;">Have a question, feedback, or just want to say hello? We'd love to hear from you.</p>
+      <p class="section-subtitle center">Have a question, feedback, or just want to say hello? We'd love to hear from you.</p>
       <a href="mailto:support@ekushlabs.com" class="contact-email">
-        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
         <span>support@ekushlabs.com</span>
       </a>
     </div>
   </section>
 
-  <!-- ─── FOOTER ─────────────────────────────────────────────── -->
-  <footer>
+  <!-- ─── FOOTER ────────────────────────────────────────────────── -->
+  <footer id="footer">
     <a href="#hero" class="footer-brand">
       <img src="assets/logo.png" alt="EkushLabs" class="footer-logo" />
       <span class="footer-name">EkushLabs</span>
     </a>
     <span class="footer-tagline">Simple apps, meaningful experiences</span>
-    <span class="footer-copy">© 2025 EkushLabs. All rights reserved.</span>
+    <span class="footer-copy">© <span id="footer-year"></span> EkushLabs. All rights reserved.</span>
   </footer>
 
-  <script>
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
-
-    // Navbar scroll effect
-    const nav = document.querySelector('nav');
-    window.addEventListener('scroll', () => {
-      nav.style.borderBottomColor = window.scrollY > 50
-        ? 'rgba(0, 212, 255, 0.15)'
-        : 'rgba(0, 212, 255, 0.08)';
-    });
-  </script>
+  <!-- ─── SCRIPTS ───────────────────────────────────────────────── -->
+  <script src="js/main.js" defer></script>
 
 </body>
 </html>
